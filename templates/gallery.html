@@ -1,0 +1,89 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Gallery Baikal</title>
+
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://libs.zappar.com/zappar-aframe/0.3.29/zappar-aframe.js"></script>
+</head>
+
+<body>
+
+<a-scene cursor="rayOrigin: mouse" raycaster="objects: [data-clickable]" loading-screen="backgroundColor: #344A60">
+
+    <a-assets>
+
+        <img id="next"
+             src="https://cdn.glitch.global/314ea0a4-1a42-4ab9-b4f2-257347a933b7/1904671-arrow-arrow-right-change-direction-next-page-right_122521.png?v=1646722525318" />
+        <img id="prev"
+             src="https://cdn.glitch.global/314ea0a4-1a42-4ab9-b4f2-257347a933b7/round_prev_icon_132788.png?v=1646722527858" />
+
+        <!-- Картинки оверлеи: фотографии из галереи -->
+        <img id="picture1"
+             src="https://cdn.glitch.global/e6eda915-1641-4e7f-a71c-e08238b5b19e/11.jpg?v=1642506242736" />
+        <img id="picture2"
+             src="https://cdn.glitch.global/e6eda915-1641-4e7f-a71c-e08238b5b19e/22.jpg?v=1642506243222" />
+        <video id="picture3" src="https://cdn.glitch.me/314ea0a4-1a42-4ab9-b4f2-257347a933b7/pexels-nadezhda-moryak-7039229.mp4?v=1646722782850"></video>
+
+        <a-asset-item id="target"
+                      src="https://cdn.glitch.global/e6eda915-1641-4e7f-a71c-e08238b5b19e/gallery_targ.zpt?v=1642505712196" />
+    </a-assets>
+
+
+    <a-entity zappar-permissions-ui id="permissions"></a-entity>
+
+
+    <a-entity zappar-compatibility-ui id="compatibility"></a-entity>
+
+
+    <a-camera zappar-camera cursor="rayOrigin: mouse; fuse: false;" raycaster="objects: .collidable"></a-camera>
+
+
+    <a-entity zappar-image="target: #target ">
+
+        <a-entity>
+            <a-plane id="pic0" visible="true" src="#picture1" width="1.51" height="1.5" position="0 0 -0.01">
+            </a-plane>
+
+            <a-plane id="pic1" visible="false" src="#picture2" width="1.51" height="1.5" position="0 0 -0.01">
+            </a-plane>
+            <a-plane id="pic2" visible="false" src="#picture4" width="1.51" height="1.5" position="0 0 -0.01">
+            </a-plane>
+        </a-entity>
+
+        <a-entity geometry="primitive: plane" material="src: #next; transparent: true;" position="0.7 0 0"
+                  scale="0.2 0.2 0.2" data-clickable onclick="OnNextClick()"></a-entity>
+
+        <a-entity geometry="primitive: plane" material="src: #prev; transparent: true;" position="-0.7 0 0"
+                  scale="0.2 0.2 0.2" data-clickable onclick="OnPrevClick()"></a-entity>
+    </a-entity>
+</a-scene>
+
+
+<script>
+    var curr = 0;
+    var picAmount = 2;
+    var d = document;
+
+    function OnNextClick() {
+        if (curr < picAmount - 1) {
+            curr++;
+            d.getElementById("pic" + curr).setAttribute("visible", true);
+            d.getElementById("pic" + (curr - 1)).setAttribute("visible", false);
+        }
+    }
+
+
+    function OnPrevClick() {
+        if (curr > 0) {
+            curr--;
+            d.getElementById("pic" + curr).setAttribute("visible", true);
+            d.getElementById("pic" + (curr + 1)).setAttribute("visible", false);
+        }
+    }
+</script>
+</body>
+
+</html>
+
