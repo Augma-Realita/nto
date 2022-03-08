@@ -1,3 +1,4 @@
+import sqlite3
 from flask import Flask, render_template, url_for, redirect, request
 
 app = Flask(__name__)
@@ -6,6 +7,12 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     return render_template('index.html')
+
+
+def get_db_connection():
+    conn = sqlite3.connect('database.db')
+
+    return conn
 
 
 @app.route('/gallery', methods=['GET', 'POST'])
