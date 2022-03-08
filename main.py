@@ -1,5 +1,5 @@
 import sqlite3
-from flask import Flask, render_template, url_for, redirect, request
+from flask import Flask, render_template, url_for, redirect, request, jsonify
 
 app = Flask(__name__)
 
@@ -9,10 +9,12 @@ def index():
     return render_template('index.html')
 
 
-def get_db_connection():
-    conn = sqlite3.connect('database.db')
+@app.route('/get_route')
+def getRandomRoute():
+    connection = sqlite3.connect('db.sqlite')
 
-    return conn
+    cur = connection.cursor()
+    return jsonify(list(cur.execute("select max(marker_id) from routes")))
 
 
 @app.route('/gallery', methods=['GET', 'POST'])
