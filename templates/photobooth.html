@@ -69,6 +69,33 @@
 </button>
 
 <button
+        onclick="MakeScreenshot()"
+        style="
+        width: 90px;
+        background-color: white;
+        border-radius: 33px;
+        border-style: solid;
+        border-width: 3px;
+        border-style: solid;
+        border-color: black;
+        position: absolute;
+        left:48%;
+        top: 80%;
+      "
+>
+    <p
+            style="
+          font-size: 18px;
+          line-height: 100%;
+          text-align: center;
+          color: black;
+        "
+    >
+        Фото
+    </p>
+</button>
+
+<button
         onclick="OnNextClick()"
         style="
         width: 150px;
@@ -94,8 +121,9 @@
         следующая
     </p>
 </button>
-
+<script src="html2canvas.js"></script>
 <script>
+
     var curr = 0;
     var maskAmount = 2;
     var d = document;
@@ -117,6 +145,35 @@
         d.getElementById("mainEntity").removeAttribute("material")
         d.getElementById("mainEntity").setAttribute("material", img[curr] + "; transparent: true;")
     }
+
+    function saveBase64AsFile(base64, fileName) {
+        var link = document.createElement("a");
+
+        document.body.appendChild(link); // for Firefox
+
+        link.setAttribute("href", base64);
+        link.setAttribute("download", fileName);
+        link.click();
+    }
+
+    function MakeScreenshot() {
+        // const screenshotTarget = document.body;
+
+        // html2canvas(screenshotTarget).then((canvas) => {
+        //     const base64image = canvas.toDataURL("image/png");
+        //     var currentdate = new Date();
+        //     var datetime = "Last Sync: " + currentdate.getDate() + "/"
+        //         + (currentdate.getMonth()+1)  + "/"
+        //         + currentdate.getFullYear() + " @ "
+        //         + currentdate.getHours() + ":"
+        //         + currentdate.getMinutes() + ":"
+        //         + currentdate.getSeconds();
+        //     saveBase64AsFile(base64image, datetime)
+        // });
+
+        document.querySelector('a-scene').components.screenshot.capture('perspective')
+    }
+
 </script>
 </body>
 
