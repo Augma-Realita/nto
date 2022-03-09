@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
     <head>
         <meta charset="UTF-8">
         <title>Title</title>
+
+        <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
     </head>
     <body>
         <div
@@ -34,9 +36,10 @@
                 border-width: 0px;
                 position: absolute;
                 top: 40%;">
-                <input type="text" id="inputField" size="30" maxlength="30">
+                <input type="text" id="inputField" size="30" maxlength="30" value="">
             </div>
-            <script src="/scripts/navigation.js"></script>
+
+
             <button onclick="RouteEntered()"
                     style="
         width: 200px;
@@ -45,8 +48,7 @@
         border-width: 0px;
         position: absolute;
         top: 60%;
-      "
-            >
+      ">
                 <p
                         style="
           font-size: 24px;
@@ -58,6 +60,7 @@
                     Готово
                 </p>
             </button>
+
 
             <button onclick="window.location.href='/'"
                     style="
@@ -81,5 +84,39 @@
                 </p>
             </button>
         </div>
+
+    <script>
+        function RouteEntered()
+        {
+
+            var inputField = document.getElementById("inputField")
+            console.log(inputField.value)
+            var lst = inputField.value.split([',', ' '])
+
+            var row_data = lst;
+
+            row_data = JSON.stringify(row_data);
+            $.post("/custom_route", row_data);
+            console.log(row_data)
+
+
+            // let url = "http://127.0.0.1:5000/custom_route";
+            //
+            //
+            // let xhr = new XMLHttpRequest();
+            // xhr.open("POST", url);
+            //
+            // xhr.onreadystatechange = function () {
+            //     if (xhr.readyState === 4) {
+            //         console.log(xhr.responseText);
+            //     }};
+            //
+            // let data = lst
+            // xhr.send("data");
+
+            // window.location.href='/navigation?random=1'
+
+        }
+    </script>
     </body>
 </html>
