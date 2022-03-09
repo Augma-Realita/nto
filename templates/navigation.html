@@ -8,10 +8,12 @@
 
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://libs.zappar.com/zappar-aframe/0.3.29/zappar-aframe.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+
 </head>
 <body>
 
-    <a-scene>
+    <a-scene framet>
 
         <a-assets>
             <img id="one"
@@ -19,58 +21,100 @@
             <img id="two"
              src="/static/mask2.png"/>
 
+            <a-asset-item id="firstMarker"
+                          src="/static/markers_trained/10.zpt" />
+
+            <a-asset-item id="nextMarker"
+                          src="/static/markers_trained/1.zpt" />
+
         </a-assets>
 
         <a-entity zappar-permissions-ui id="permissions">
             <a-entity text="value: Please reload the page, accepting the camera permissions." position="0 0 -2">
             </a-entity>
         </a-entity>
-        <a-entity camera zappar-camera="user-facing: true;"></a-entity>
+        <a-entity camera zappar-camera></a-entity>
 
-        <a-asset-item id="target"
-                      src="https://cdn.glitch.global/e6eda915-1641-4e7f-a71c-e08238b5b19e/gallery_targ.zpt?v=1642505712196" />
 
-        <a-entity zappar-image="target: #target ">
+        <a-entity zappar-image="target: #firstMarker ">
+            <a-image src="/static/mask1.png"></a-image>
+            <a-entity obj-model=""></a-entity>
+        </a-entity>
 
-            <a-entity>
-                <a-plane id="pic0" visible="true" src="#picture1" width="1.51" height="1.5" position="0 0 -0.01">
-                </a-plane>
-            </a-entity>
+        <a-entity zappar-image="target: #nextMarker ">
+            <a-image src="/static/mask2.png"></a-image>
+            <a-entity obj-model=""></a-entity>
+        </a-entity>
 
-            <a-entity geometry="primitive: plane" material="src: #next; transparent: true;" position="0.7 0 0"
-                      scale="0.2 0.2 0.2" data-clickable onclick="OnNextClick()"></a-entity>
+        <a-entity zappar-image="target: #nextMarker ">
+            <a-image src="/static/mask2.png"></a-image>
+            <a-entity obj-model=""></a-entity>
+        </a-entity>
 
-            <a-entity geometry="primitive: plane" material="src: #prev; transparent: true;" position="-0.7 0 0"
-                      scale="0.2 0.2 0.2" data-clickable onclick="OnPrevClick()"></a-entity>
+        <a-entity zappar-image="target: #nextMarker ">
+            <a-image src="/static/mask2.png"></a-image>
+            <a-entity obj-model=""></a-entity>
+        </a-entity>
+
+        <a-entity zappar-image="target: #nextMarker ">
+            <a-image src="/static/mask2.png"></a-image>
+            <a-entity obj-model=""></a-entity>
+        </a-entity>
+
+        <a-entity zappar-image="target: #nextMarker ">
+            <a-image src="/static/mask2.png"></a-image>
+            <a-entity obj-model=""></a-entity>
+        </a-entity>
+
+        <a-entity zappar-image="target: #nextMarker ">
+            <a-image src="/static/mask2.png"></a-image>
+            <a-entity obj-model=""></a-entity>
+        </a-entity>
+
+        <a-entity zappar-image="target: #nextMarker ">
+            <a-image src="/static/mask2.png"></a-image>
+            <a-entity obj-model=""></a-entity>
+        </a-entity>
+
+        <a-entity zappar-image="target: #nextMarker ">
+            <a-image src="/static/mask2.png"></a-image>
+            <a-entity obj-model=""></a-entity>
         </a-entity>
     </a-scene>
 
-    <nav class="menu menu--adsila">
-        <h1>AR-Guide</h1>
-        <a class="menu__item" href="">
-            <span class="menu__item-name">Стандартный маршрут</span>
-        </a>
-        <a class="menu__item" href="">
-            <span class="menu__item-name">Рандомный маршрут</span>
-        </a>
-        <div class="dropdown">
-            <button class="dropbtn">Выбрать маршрут</button>
-            <div class="dropdown-content">
-                <a href="#">No.1</a>
-                <a href="#">No.2</a>
-                <a href="#">No.3</a>
-                <a href="#">No.4</a>
-                <a href="#">No.5</a>
-                <a href="#">No.6</a>
-                <a href="#">No.7</a>
-                <a href="#">No.8</a>
-            </div>
-        </div>
-        <p></p>
-        <a class="menu__item" href="index">
-            <span class="menu__item-name">В меню</span>
-        </a>
-    </nav>
+    <script>
+        var currentID = -1
+        var nextID = -1
+        firstTime = true
+        var firstMarker = document.getElementById("firstMarker")
+        var nextMarker = document.getElementById("nextMarker")
+        AFRAME.registerComponent("framet", {
+            init: function () {
+
+                var firstMarker = document.getElementById("firstMarker")
+                var nextMarker = document.getElementById("nextMarker")
+
+                update();
+            },
+        });
+
+        function update()
+        {
+            currentID = $.get('/get_current_id')
+            nextID = $.get('get_next_id')
+            if(currentID == 0) currentID = 10;
+            if(nextID == 0) nextID = 10;
+            if(firstTime)
+            {
+                firstMarker.removeAttribute('src')
+                firstMarker.setAttribute('scr', "/static/markers_trained" + currentID + ".zpt")
+
+
+                console.log(firstMarker)
+                firstTime = false;
+            }
+        }
+    </script>
 </body>
 </html>
 
