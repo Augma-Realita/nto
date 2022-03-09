@@ -1,4 +1,4 @@
-routes = [[4, 3, 0], [2, 1, 0], [8, 7, 6, 0]]
+routes = [[4, 3, 0], [2, 1, 0], [8, 7, 6, 0], [5, 6, 0]]
 
 
 def make_route(start, end):
@@ -34,5 +34,3 @@ def make_route(start, end):
 
     return res
 
-
-print(make_route(1, 6))
