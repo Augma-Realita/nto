@@ -4,8 +4,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>AR-guide</title>
     <link rel="stylesheet" href="static/style.css" />
+
+
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://libs.zappar.com/zappar-aframe/0.3.29/zappar-aframe.js"></script>
 </head>
 <body>
+
+    <a-scene>
+
+        <a-assets>
+            <img id="one"
+             src="/static/mask1.png"/>
+            <img id="two"
+             src="/static/mask2.png"/>
+
+        </a-assets>
+
+        <a-entity zappar-permissions-ui id="permissions">
+            <a-entity text="value: Please reload the page, accepting the camera permissions." position="0 0 -2">
+            </a-entity>
+        </a-entity>
+        <a-entity camera zappar-camera="user-facing: true;"></a-entity>
+
+        <a-asset-item id="target"
+                      src="https://cdn.glitch.global/e6eda915-1641-4e7f-a71c-e08238b5b19e/gallery_targ.zpt?v=1642505712196" />
+
+        <a-entity zappar-image="target: #target ">
+
+            <a-entity>
+                <a-plane id="pic0" visible="true" src="#picture1" width="1.51" height="1.5" position="0 0 -0.01">
+                </a-plane>
+            </a-entity>
+
+            <a-entity geometry="primitive: plane" material="src: #next; transparent: true;" position="0.7 0 0"
+                      scale="0.2 0.2 0.2" data-clickable onclick="OnNextClick()"></a-entity>
+
+            <a-entity geometry="primitive: plane" material="src: #prev; transparent: true;" position="-0.7 0 0"
+                      scale="0.2 0.2 0.2" data-clickable onclick="OnPrevClick()"></a-entity>
+        </a-entity>
+    </a-scene>
+
     <nav class="menu menu--adsila">
         <h1>AR-Guide</h1>
         <a class="menu__item" href="">

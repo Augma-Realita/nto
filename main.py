@@ -29,6 +29,19 @@ def gallery():
     # show the form, it wasn't submitted
     return render_template('gallery.html')
 
+@app.route('/navigation_lobby', methods=['GET', 'POST'])
+def navigation_lobby():
+    if request.method == 'POST':
+        # do stuff when the form is submitted
+
+        # redirect to end the POST handling
+        # the redirect can be to the same route or somewhere else
+        return redirect(url_for('index'))
+
+    # show the form, it wasn't submitted
+    return render_template('navigationLobby.html')
+
+
 @app.route('/navigation', methods=['GET', 'POST'])
 def navigation():
     if request.method == 'POST':
@@ -40,6 +53,19 @@ def navigation():
 
     # show the form, it wasn't submitted
     return render_template('navigation.html')
+
+
+@app.route('/create_route', methods=['GET', 'POST'])
+def create_route():
+    if request.method == 'POST':
+        # do stuff when the form is submitted
+
+        # redirect to end the POST handling
+        # the redirect can be to the same route or somewhere else
+        return redirect(url_for('index'))
+
+    # show the form, it wasn't submitted
+    return render_template('createRoute.html')
 
 @app.route('/panorama1', methods=['GET', 'POST'])
 def panorama1():
