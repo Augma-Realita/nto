@@ -6,9 +6,11 @@
 
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://libs.zappar.com/zappar-aframe/0.3.29/zappar-aframe.js"></script>
+
 </head>
 
 <body>
+
 <a-scene cursor="rayOrigin: mouse" raycaster="objects: [data-clickable]">
 
     <a-assets>
@@ -38,6 +40,7 @@
               scale="0.5 0.5 0.5" data-clickable onclick="OnPrevClick()"></a-entity>
 
 </a-scene>
+
 
 <button
         id="first"
@@ -103,7 +106,6 @@
         border-radius: 33px;
         border-style: solid;
         border-width: 3px;
-        border-style: solid;
         border-color: black;
         position: absolute;
         left: 70%;
@@ -121,30 +123,75 @@
         следующая
     </p>
 </button>
+
+<button
+        onclick="Game()"
+        style="
+        width: 150px;
+        background-color: white;
+        border-radius: 33px;
+        border-style: solid;
+        border-width: 3px;
+        border-color: black;
+        position: absolute;
+        left: 81%;
+        top: 80%;
+      "
+>
+
+        <center>
+    <nav class="menu menu--adsila">
+
+        <a class="menu__item" href="/game">
+            <span class="menu__item-name">Игра</span>
+        </a>
+
+
+    </nav>
+</center>
+
+</button>
+
+<script src="html2canvas.js"></script>
+
+
 <script>
 
-    var curr = 0;
-    var maskAmount = 2;
-    var d = document;
 
+    var mainEntity = document.getElementById("mainEntity");
+    var score = 0;
+    var pipe = []
+    var p = 20
+    var c = 0;
+    var game = 0
+    var d = document;
     var img = ["src:#one", "src:#two"]
 
-    // Пролистывание вперед
+
+
+
+
+
+
+    /*********** Code for face tracking *********/
     function OnNextClick() {
-        curr++;
-        if (curr > 1) curr = 0
-        d.getElementById("mainEntity").removeAttribute("material")
-        d.getElementById("mainEntity").setAttribute("material", img[curr] + "; transparent: true;")
-    }
+        c++;
+        console.log(c)
 
-    // Пролистывание назад
+
+        if (c > 1) c = 0
+
+
+        mainEntity.removeAttribute("material")
+        mainEntity.setAttribute("material", img[c] + "; transparent: true;")
+
+    }
     function OnPrevClick() {
-        curr--;
-        if (curr < 0) curr = 1
-        d.getElementById("mainEntity").removeAttribute("material")
-        d.getElementById("mainEntity").setAttribute("material", img[curr] + "; transparent: true;")
+        c--;
+        if (c < 0) c = 1
+        overlay.removeAttribute("material")
+        overlay.setAttribute("material", img[c] + "; transparent: true;")
     }
-
     function saveBase64AsFile(base64, fileName) {
         var link = document.createElement("a");
 
@@ -154,7 +201,6 @@
         link.setAttribute("download", fileName);
         link.click();
     }
-
     function MakeScreenshot() {
         // const screenshotTarget = document.body;
 
@@ -170,10 +216,12 @@
         //     saveBase64AsFile(base64image, datetime)
         // });
 
-        document.querySelector('a-scene').components.screenshot.capture('perspective')
-    }
+        document.querySelector('a-scene').components.screenshot.capture('perspective')}
+
+
 
 </script>
+
 </body>
 
 </html>

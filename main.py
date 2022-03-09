@@ -95,5 +95,12 @@ def portal():
     return render_template('portal.html')
 
 
+@app.route('/game', methods=['GET', 'POST'])
+def toGame():
+    if request.method == 'POST':
+        return redirect(url_for('index'))
+    return render_template('game.html')
+
+
 if __name__ == '__main__':
     app.run()
