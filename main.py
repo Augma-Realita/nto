@@ -1,6 +1,6 @@
 import sqlite3
 from flask import Flask, render_template, url_for, redirect, request, jsonify
-
+from scripts.routeBuilder import make_route
 app = Flask(__name__)
 
 
@@ -21,7 +21,18 @@ def getRandomRoute():
 @app.route('/custom_route', methods=['GET', 'POST'])
 def customRoute():
     print("here we go")
-    print(request.get_json(force = True))  # parse as JSO
+    routes = list(map(int, request.get_json(force=True)[0].split()))
+    print(routes)
+    res = []
+
+    for i in range(len(routes) - 1):
+        try:
+            res.pop()
+        except:
+            pass
+        res += make_route(routes[i], routes[i + 1])
+
+    print(res)
     return 'Sucesss', 200
 
 
