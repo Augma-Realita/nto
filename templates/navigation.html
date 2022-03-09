@@ -21,11 +21,25 @@
             <img id="two"
              src="/static/mask2.png"/>
 
-            <a-asset-item id="firstMarker"
+            <a-asset-item id="m1"
+                          src="/static/markers_trained/1.zpt" />
+            <a-asset-item id="m2"
+                          src="/static/markers_trained/2.zpt" />
+            <a-asset-item id="m3"
+                          src="/static/markers_trained/3.zpt" />
+            <a-asset-item id="m4"
+                          src="/static/markers_trained/4.zpt" />
+            <a-asset-item id="m5"
+                          src="/static/markers_trained/5.zpt" />
+            <a-asset-item id="m6"
+                          src="/static/markers_trained/6.zpt" />
+            <a-asset-item id="m7"
+                          src="/static/markers_trained/7.zpt" />
+            <a-asset-item id="m8"
+                          src="/static/markers_trained/8.zpt" />
+            <a-asset-item id="m0"
                           src="/static/markers_trained/10.zpt" />
 
-            <a-asset-item id="nextMarker"
-                          src="/static/markers_trained/1.zpt" />
 
         </a-assets>
 
@@ -36,56 +50,56 @@
         <a-entity camera zappar-camera></a-entity>
 
 
-        <a-entity zappar-image="target: #firstMarker ">
-            <a-image src="/static/mask1.png"></a-image>
+        <a-entity zappar-image="target: #m1 ">
+            <a-image id="i1"></a-image>
             <a-entity obj-model="obj: url(/static/statue_2.obj)"></a-entity>
         </a-entity>
 
-        <a-entity zappar-image="target: #nextMarker ">
-            <a-image src="/static/mask2.png"></a-image>
+        <a-entity zappar-image="target: #m2 ">
+            <a-image id="i2"></a-image>
             <a-entity obj-model="obj: url(/static/statue_3.obj)"></a-entity>
         </a-entity>
 
-        <a-entity zappar-image="target: #nextMarker ">
-            <a-image src="/static/mask2.png"></a-image>
+        <a-entity zappar-image="target: #m3 ">
+            <a-image id="i3"></a-image>
             <a-entity obj-model="obj: url(/static/statue_4.obj)"></a-entity>
         </a-entity>
 
-        <a-entity zappar-image="target: #nextMarker ">
-            <a-image src="/static/mask2.png"></a-image>
-            <a-entity obj-model=""></a-entity>
+        <a-entity zappar-image="target: #m4 ">
+            <a-image id="i4"></a-image>
+            <a-image src="/static/img1.png"></a-image>
         </a-entity>
 
-        <a-entity zappar-image="target: #nextMarker ">
-            <a-image src="/static/mask2.png"></a-image>
-            <a-entity obj-model=""></a-entity>
+        <a-entity zappar-image="target: #m5 ">
+            <a-image id="i5"></a-image>
+            <a-image src="/static/img2.png"></a-image>
         </a-entity>
 
-        <a-entity zappar-image="target: #nextMarker ">
-            <a-image src="/static/mask2.png"></a-image>
-            <a-entity obj-model=""></a-entity>
+        <a-entity zappar-image="target: #m6 ">
+            <a-image id="i6"></a-image>
+            <a-image src="/static/img3.png"></a-image>
         </a-entity>
 
-        <a-entity zappar-image="target: #nextMarker ">
-            <a-image src="/static/mask2.png"></a-image>
-            <a-entity obj-model=""></a-entity>
+        <a-entity zappar-image="target: #m7 ">
+            <a-image id="i7"></a-image>
+            <a-image src="/static/img4.png"></a-image>
         </a-entity>
 
-        <a-entity zappar-image="target: #nextMarker ">
-            <a-image src="/static/mask2.png"></a-image>
-            <a-entity obj-model=""></a-entity>
+        <a-entity zappar-image="target: #m8 ">
+            <a-image id="i8"></a-image>
+            <a-image src="/static/img5.png"></a-image>
         </a-entity>
 
-        <a-entity zappar-image="target: #nextMarker ">
-            <a-image src="/static/mask2.png"></a-image>
-            <a-entity obj-model=""></a-entity>
+        <a-entity zappar-image="target: #m0 ">
+            <a-image id="i0"></a-image>
+            <a-image src="/static/img0.png"></a-image>
         </a-entity>
     </a-scene>
 
     <script>
         var currentID = -1
         var nextID = -1
-        firstTime = true
+
         var firstMarker = document.getElementById("firstMarker")
         var nextMarker = document.getElementById("nextMarker")
         AFRAME.registerComponent("framet", {
@@ -93,26 +107,48 @@
 
                 var firstMarker = document.getElementById("firstMarker")
                 var nextMarker = document.getElementById("nextMarker")
-
-                update();
             },
         });
 
-        function update()
-        {
+
+        function update() {
             currentID = $.get('/get_current_id')
-            nextID = $.get('get_next_id')
-            if(currentID == 0) currentID = 10;
-            if(nextID == 0) nextID = 10;
-            if(firstTime)
-            {
-                firstMarker.removeAttribute('src')
-                firstMarker.setAttribute('scr', "/static/markers_trained" + currentID + ".zpt")
+            arrowID = $.get('/get_current_arrow')
 
+            if(arrowID == 0) window.location.href='/'
 
-                console.log(firstMarker)
-                firstTime = false;
+            else {
+                if (currentID == 0) currentID = 10;
+                removeAll()
+                document.getElementById("i" + currentID).setAttribute('src', "/static/arrow" + arrowID + ".png")
             }
+        }
+
+        function removeAll()
+        {
+            // var i1 = document.getElementById('i1')
+            // var i2 = document.getElementById('i2')
+            // var i3 = document.getElementById('i3')
+            // var i4 = document.getElementById('i4')
+            //
+            // var i5 = document.getElementById('i5')
+            // var i6 = document.getElementById('i6')
+            // var i7 = document.getElementById('i7')
+            // var i8 = document.getElementById('i8')
+            //
+            // var i0 = document.getElementById('i0')
+
+            document.getElementById('i1').remove('src')
+            document.getElementById('i2').remove('src')
+            document.getElementById('i3').remove('src')
+            document.getElementById('i4').remove('src')
+
+            document.getElementById('i5').remove('src')
+            document.getElementById('i6').remove('src')
+            document.getElementById('i7').remove('src')
+            document.getElementById('i8').remove('src')
+
+            document.getElementById('i0').remove('src')
         }
     </script>
 </body>
