@@ -16,23 +16,23 @@
     <a-scene framet>
 
         <a-assets>
-            <a-asset-item id="m1"
+            <a-asset-item id="a1"
                           src="/static/markers_trained/1.zpt" />
-            <a-asset-item id="m2"
+            <a-asset-item id="a2"
                           src="/static/markers_trained/2.zpt" />
-            <a-asset-item id="m3"
+            <a-asset-item id="a3"
                           src="/static/markers_trained/3.zpt" />
-            <a-asset-item id="m4"
+            <a-asset-item id="a4"
                           src="/static/markers_trained/4.zpt" />
-            <a-asset-item id="m5"
+            <a-asset-item id="a5"
                           src="/static/markers_trained/5.zpt" />
-            <a-asset-item id="m6"
+            <a-asset-item id="a6"
                           src="/static/markers_trained/6.zpt" />
-            <a-asset-item id="m7"
+            <a-asset-item id="a7"
                           src="/static/markers_trained/7.zpt" />
-            <a-asset-item id="m8"
+            <a-asset-item id="a8"
                           src="/static/markers_trained/8.zpt" />
-            <a-asset-item id="m0"
+            <a-asset-item id="a0"
                           src="/static/markers_trained/10.zpt" />
 
 
@@ -45,51 +45,52 @@
         <a-entity camera zappar-camera></a-entity>
 
 
-        <a-entity zappar-image="target: #m1 ">
-            <a-image id="i1"></a-image>
+        <a-entity zappar-image="target: #a1 ">
             <a-entity gltf-model="obj: url(/static/statue_2.glb)" id="m1"></a-entity>
+            <a-image id="i1" opacity="0"></a-image>
         </a-entity>
 
 
-        <a-entity zappar-image="target: #m2 ">
-            <a-image id="i2"></a-image>
+        <a-entity zappar-image="target: #a2 ">
             <a-entity gltf-model="obj: url(/static/statue_3.glb)" id="m2"></a-entity>
+            <a-image id="i2" opacity="0"></a-image>
         </a-entity>
 
-        <a-entity zappar-image="target: #m3 ">
-            <a-image id="i3"></a-image>
+        <a-entity zappar-image="target: #a3 ">
             <a-entity gltf-model="obj: url(/static/statue_4.glb)" id="m3"></a-entity>
+            <a-image id="i3" opacity="0"></a-image>
         </a-entity>
 
 
-        <a-entity zappar-image="target: #m4 ">
-            <a-image id="i4"></a-image>
+        <a-entity zappar-image="target: #a4 ">
             <a-image src="/static/img1.jpg" id="m4"></a-image>
+            <a-image id="i4" opacity="0"></a-image>
         </a-entity>
 
-        <a-entity zappar-image="target: #m5 ">
-            <a-image id="i5"></a-image>
+        <a-entity zappar-image="target: #a5 ">
             <a-image src="/static/img2.jpg" id="m5"></a-image>
+            <a-image id="i5" opacity="0"></a-image>
         </a-entity>
 
-        <a-entity zappar-image="target: #m6 ">
-            <a-image id="i6"></a-image>
+        <a-entity zappar-image="target: #a6 ">
             <a-image src="/static/img3.jpg" id="m6"></a-image>
+            <a-image id="i6" opacity="0"></a-image>
         </a-entity>
 
-        <a-entity zappar-image="target: #m7 ">
-            <a-image id="i7"></a-image>
+        <a-entity zappar-image="target: #a7 ">
             <a-image src="/static/img4.jpg" id="m7"></a-image>
+            <a-image id="i7" opacity="0"></a-image>
         </a-entity>
 
-        <a-entity zappar-image="target: #m8 ">
-            <a-image id="i8"></a-image>
+        <a-entity zappar-image="target: #a8 ">
             <a-image src="/static/img5.jpg" id="m8"></a-image>
+            <a-image id="i8" opacity="0"></a-image>
         </a-entity>
 
-        <a-entity zappar-image="target: #m0 ">
-            <a-image id="i0"></a-image>
+        <a-entity zappar-image="target: #a0 ">
             <a-image src="/static/img0.jpg" id="m0"></a-image>
+            <a-image id="i0" opacity="0"></a-image>
+
         </a-entity>
     </a-scene>
     <button onclick="update()"
@@ -124,19 +125,35 @@
         function update() {
             if(currentID != -1)
             {
-                document.getElementById("m" + currentID).setAttribute('visible', 'true')
+                document.getElementById("i" + currentID).removeAttribute('src')
+                document.getElementById("i" + currentID).removeAttribute('opacity')
+                document.getElementById("i" + currentID).setAttribute('opacity', "0")
+
+                if(currentID > 3 || currentID == 0)
+                {
+                    document.getElementById("m" + currentID).setAttribute('src', '/static/img' + currentID +'.jpg')
+                }
+                else
+                {
+                    document.getElementById("m" + currentID).setAttribute('gltf-model', 'obj: url(/static/statue_' + (currentID + 1) + '.glb)')
+                }
             }
 
             $.get('/get_current_id', function (data) {
                 currentID = data; console.log(data)
                 console.log(currentID)
-                arrowID = $.get('/get_current_arrow', function (){
+                arrowID = $.get('/get_current_arrow', function (data2){
+                    arrowID = data2
                     if(arrowID == 0) window.location.href='/'
 
                     else {
                         removeAll()
-                        document.getElementById("m" + currentID).setAttribute('visible', 'false')
+                        document.getElementById("m" + currentID).removeAttribute('src')
+                        document.getElementById("m" + currentID).removeAttribute('gltf-model')
                         document.getElementById("i" + currentID).setAttribute('src', "/static/arrow" + arrowID + ".png")
+
+                        document.getElementById("i" + currentID).removeAttribute('opacity')
+                        document.getElementById("i" + currentID).setAttribute('opacity', "1")
                     }
                 })
             })

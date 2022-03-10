@@ -109,7 +109,8 @@ def toGame():
 def getCurrentId():
     global nextTarget
     nextTarget += 1
-    print(res)
+    print("nT")
+    print(res[nextTarget - 1])
     return str(res[nextTarget - 1])
 
 
@@ -118,7 +119,9 @@ def getCurrentArrow():
     if nextTarget == len(res) - 1:
         return "0"
     else:
-        arrowDir = get_arrow(res[nextTarget], res[nextTarget + 1])
+        arrowDir = get_arrow(res[nextTarget - 1], res[nextTarget])
+        print("{} {}".format(res[nextTarget], res[nextTarget + 1]))
+        print("aD")
         print(arrowDir)
         return str(arrowDir)
 
