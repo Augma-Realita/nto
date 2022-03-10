@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+
+</head>
+<body>
+    <a>Login</a>
+    <input type="text" id="inputField1" size="30" maxlength="30" value="">
+    <a>Password</a>
+    <input type="text" id="inputField2" size="30" maxlength="30" value="">
+    <button onclick="Start()"><a>Send</a></button>
+<script>
+    function Start() {
+        var data = [document.getElementById("inputField1").value, document.getElementById("inputField2").value]
+        data = JSON.stringify(data);
+        $.post("/admin", data)
+    }
+</script>
+</body>
+</html>

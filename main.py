@@ -126,5 +126,30 @@ def getCurrentArrow():
         return str(arrowDir)
 
 
+@app.route('/admin_form', methods=['GET', 'POST'])
+def toForm():
+    if request.method == 'POST':
+        return redirect(url_for('index'))
+    return render_template('adminForm.html')
+
+
+@app.route('/admin', methods=['GET', 'POST'])
+def toadmin():
+    if request.get_json(force=True)[0] == "234" and request.get_json(force=True)[1] == "123":
+        print("1")
+        return redirect('/admin1')
+    print("0")
+
+    return "0"
+
+
+@app.route('/admin1', methods=['GET', 'POST'])
+def toFo3rm():
+    print("3")
+    if request.method == 'POST':
+        return redirect(url_for('index'))
+    return render_template('admin.html')
+
+
 if __name__ == '__main__':
     app.run()
