@@ -1,10 +1,11 @@
 import sqlite3
 from flask import Flask, render_template, url_for, redirect, request, jsonify
 from scripts.routeBuilder import make_route
+from scripts.base_manager import
 app = Flask(__name__)
 
 res = []
-nextTarget = -1
+nextTarget = 0
 
 @app.route('/')
 def index():
@@ -29,6 +30,7 @@ def customRoute():
     print("here we go")
     routes = list(map(int, request.get_json(force=True)[0].split()))
     print(routes)
+    global res
     res = []
 
     for i in range(len(routes) - 1):
@@ -39,6 +41,7 @@ def customRoute():
         res += make_route(routes[i], routes[i + 1])
 
     print(res)
+    global nextTarget
     nextTarget = 0
     return 'Sucesss', 200
 
@@ -101,6 +104,19 @@ def toGame():
         return redirect(url_for('index'))
     return render_template('game.html')
 
+
+@app.route('/get_current_id', methods=['GET', 'POST'])
+def getCurrentId():
+    global nextTarget
+    nextTarget += 1
+    print(res)
+    return str(res[nextTarget - 1])
+
+
+@app.route('/get_current_arrow', methods=['GET', 'POST'])
+def getCurrentArrow():
+
+    return 'lol'
 
 if __name__ == '__main__':
     app.run()

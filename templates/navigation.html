@@ -16,11 +16,6 @@
     <a-scene framet>
 
         <a-assets>
-            <img id="one"
-             src="/static/mask1.png"/>
-            <img id="two"
-             src="/static/mask2.png"/>
-
             <a-asset-item id="m1"
                           src="/static/markers_trained/1.zpt" />
             <a-asset-item id="m2"
@@ -52,77 +47,99 @@
 
         <a-entity zappar-image="target: #m1 ">
             <a-image id="i1"></a-image>
-            <a-entity obj-model="obj: url(/static/statue_2.obj)"></a-entity>
+            <a-entity obj-model="obj: url(/static/statue_2.obj)" id="m1"></a-entity>
         </a-entity>
+
 
         <a-entity zappar-image="target: #m2 ">
             <a-image id="i2"></a-image>
-            <a-entity obj-model="obj: url(/static/statue_3.obj)"></a-entity>
+            <a-entity obj-model="obj: url(/static/statue_3.obj)" id="m2"></a-entity>
         </a-entity>
 
         <a-entity zappar-image="target: #m3 ">
             <a-image id="i3"></a-image>
-            <a-entity obj-model="obj: url(/static/statue_4.obj)"></a-entity>
+            <a-entity obj-model="obj: url(/static/statue_4.obj)" id="m3"></a-entity>
         </a-entity>
+
 
         <a-entity zappar-image="target: #m4 ">
             <a-image id="i4"></a-image>
-            <a-image src="/static/img1.png"></a-image>
+            <a-image src="/static/img1.jpg" id="m4"></a-image>
         </a-entity>
 
         <a-entity zappar-image="target: #m5 ">
             <a-image id="i5"></a-image>
-            <a-image src="/static/img2.png"></a-image>
+            <a-image src="/static/img2.jpg" id="m5"></a-image>
         </a-entity>
 
         <a-entity zappar-image="target: #m6 ">
             <a-image id="i6"></a-image>
-            <a-image src="/static/img3.png"></a-image>
+            <a-image src="/static/img3.jpg" id="m6"></a-image>
         </a-entity>
 
         <a-entity zappar-image="target: #m7 ">
             <a-image id="i7"></a-image>
-            <a-image src="/static/img4.png"></a-image>
+            <a-image src="/static/img4.jpg" id="m7"></a-image>
         </a-entity>
 
         <a-entity zappar-image="target: #m8 ">
             <a-image id="i8"></a-image>
-            <a-image src="/static/img5.png"></a-image>
+            <a-image src="/static/img5.jpg" id="m8"></a-image>
         </a-entity>
 
         <a-entity zappar-image="target: #m0 ">
             <a-image id="i0"></a-image>
-            <a-image src="/static/img0.png"></a-image>
+            <a-image src="/static/img0.jpg" id="m0"></a-image>
         </a-entity>
     </a-scene>
-
+    <button onclick="update()"
+            style="
+        width: 200px;
+        background-color: rgba(116.38, 195.08, 219.94, 1);
+        border-radius: 40px;
+        border-width: 0px;
+        position: absolute;
+        top: 60%;
+      ">
+        <p
+                style="
+          font-size: 24px;
+          line-height: 100%;
+          text-align: center;
+          color: black;
+        "
+        >
+            Готово
+        </p>
+    </button>
     <script>
         var currentID = -1
-        var nextID = -1
+        var arrowID = -1
 
-        var firstMarker = document.getElementById("firstMarker")
-        var nextMarker = document.getElementById("nextMarker")
         AFRAME.registerComponent("framet", {
-            init: function () {
-
-                var firstMarker = document.getElementById("firstMarker")
-                var nextMarker = document.getElementById("nextMarker")
-            },
+            init: function () {},
         });
 
 
         function update() {
-            currentID = $.get('/get_current_id')
-            arrowID = $.get('/get_current_arrow')
+            if(currentID != -1)
+            {
+                document.getElementById("m" + currentID).setAttribute('visible', 'true')
+            }
+
+            currentID = $.get('/get_current_id').responseText
+            console.log(currentID)
+            arrowID = $.get('/get_current_arrow').responseText
 
             if(arrowID == 0) window.location.href='/'
 
             else {
-                if (currentID == 0) currentID = 10;
                 removeAll()
+                document.getElementById("m" + currentID).setAttribute('visible', 'false')
                 document.getElementById("i" + currentID).setAttribute('src', "/static/arrow" + arrowID + ".png")
             }
         }
+
 
         function removeAll()
         {

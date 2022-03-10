@@ -1,4 +1,6 @@
-routes = [[4, 3, 0], [2, 1, 0], [8, 7, 6, 0], [5, 6, 0]]
+import base_manager
+routes = base_manager.make_ar
+
 
 
 def make_route(start, end):
