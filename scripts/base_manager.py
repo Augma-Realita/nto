@@ -25,5 +25,9 @@ def get_arrow(start, end):
     conn = sqlite3.connect(db_path)
     cur = conn.cursor()
 
-    cur.execute("select arrowID from arrows where startID = ? and endID = ?", start, end)
-   
+    cur.execute("select arrowID from arrows where startID = ? and endID = ?", (start, end))
+    row = cur.fetchall()
+    return str(row[0][0])
+
+
+print(get_arrow(3, 0))

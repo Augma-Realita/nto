@@ -1,5 +1,5 @@
-import base_manager
-routes = base_manager.make_ar
+import scripts.base_manager
+routes = scripts.base_manager.make_ar()
 
 
 

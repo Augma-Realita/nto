@@ -1,7 +1,7 @@
 import sqlite3
 from flask import Flask, render_template, url_for, redirect, request, jsonify
 from scripts.routeBuilder import make_route
-from scripts.base_manager import
+from scripts.base_manager import get_arrow
 app = Flask(__name__)
 
 res = []
@@ -115,8 +115,13 @@ def getCurrentId():
 
 @app.route('/get_current_arrow', methods=['GET', 'POST'])
 def getCurrentArrow():
+    if nextTarget == len(res) - 1:
+        return "0"
+    else:
+        arrowDir = get_arrow(res[nextTarget], res[nextTarget + 1])
+        print(arrowDir)
+        return str(arrowDir)
 
-    return 'lol'
 
 if __name__ == '__main__':
     app.run()

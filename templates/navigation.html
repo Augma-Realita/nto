@@ -47,18 +47,18 @@
 
         <a-entity zappar-image="target: #m1 ">
             <a-image id="i1"></a-image>
-            <a-entity obj-model="obj: url(/static/statue_2.obj)" id="m1"></a-entity>
+            <a-entity gltf-model="obj: url(/static/statue_2.glb)" id="m1"></a-entity>
         </a-entity>
 
 
         <a-entity zappar-image="target: #m2 ">
             <a-image id="i2"></a-image>
-            <a-entity obj-model="obj: url(/static/statue_3.obj)" id="m2"></a-entity>
+            <a-entity gltf-model="obj: url(/static/statue_3.glb)" id="m2"></a-entity>
         </a-entity>
 
         <a-entity zappar-image="target: #m3 ">
             <a-image id="i3"></a-image>
-            <a-entity obj-model="obj: url(/static/statue_4.obj)" id="m3"></a-entity>
+            <a-entity gltf-model="obj: url(/static/statue_4.glb)" id="m3"></a-entity>
         </a-entity>
 
 
@@ -127,17 +127,19 @@
                 document.getElementById("m" + currentID).setAttribute('visible', 'true')
             }
 
-            currentID = $.get('/get_current_id').responseText
-            console.log(currentID)
-            arrowID = $.get('/get_current_arrow').responseText
+            $.get('/get_current_id', function (data) {
+                currentID = data; console.log(data)
+                console.log(currentID)
+                arrowID = $.get('/get_current_arrow', function (){
+                    if(arrowID == 0) window.location.href='/'
 
-            if(arrowID == 0) window.location.href='/'
-
-            else {
-                removeAll()
-                document.getElementById("m" + currentID).setAttribute('visible', 'false')
-                document.getElementById("i" + currentID).setAttribute('src', "/static/arrow" + arrowID + ".png")
-            }
+                    else {
+                        removeAll()
+                        document.getElementById("m" + currentID).setAttribute('visible', 'false')
+                        document.getElementById("i" + currentID).setAttribute('src', "/static/arrow" + arrowID + ".png")
+                    }
+                })
+            })
         }
 
 
