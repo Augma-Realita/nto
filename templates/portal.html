@@ -1,30 +1,31 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>AR-navigation</title>
-    <link rel="stylesheet" href="static/style.css" />
-</head>
-<body>
+<!-- include a-frame -->
 
-<center>
-    <nav class="menu menu--adsila">
-        <h1>
-            Порталы
-        </h1>
-        <a class="menu__item" href="panorama1">
-            <span class="menu__item-name">Портал No.1</span>
-        </a>
-        <a class="menu__item" href="panorama2">
-            <span class="menu__item-name">Портал No.2</span>
-        </a>
-        <a class="menu__item" href="index">
-            <span class="menu__item-name">В меню</span>
-        </a>как
-    </nav>
-</center>
+<script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+<script src="https://libs.zappar.com/zappar-aframe/0.3.29/zappar-aframe.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 
+<!-- start the body of your page -->
+<body style='margin : 0px; overflow: hidden;'>
+<!-- add some info at the top of the page -->
+<div style='position: fixed; top: 10px; width:100%; text-align: center; z-index: 1;'>
+    <a href="https://github.com/jeromeetienne/AR.js/" target="_blank">AR.js</a> - Two-ways Portal 360 for a-frame by <a href='https://twitter.com/jerome_etienne' target='_blank'>@jerome_etienne</a>
+</div>
+
+<!-- Define your 3d scene and enabled ar.js -->
+<a-scene embedded arjs='trackingMethod: best;'>
+    <!-- Create a anchor to attach your augmented reality -->
+    <a-anchor hit-testing-enabled='true'>
+
+        <!-- portal 360 with an image -->
+        <a-portal-door url='https://cdn.aframe.io/360-image-gallery-boilerplate/img/city.jpg' position='0 0 0' scale='0.7 1 0.7' rotation='0 90 0'><a-portal-door>
+
+            <!-- portal 360 with an video -->
+            <!-- <a-portal-door url='videos/pano.webm' position='0 0 0' scale='2 2 2' rotation='0 90 0'><a-portal-door> -->
+            <!-- <a-portal-door url='videos/aframe-city-360.mp4' position='0 0 0' scale='2 2 2' rotation='0 90 0'><a-portal-door> -->
+
+    </a-anchor>
+
+    <!-- Define a static camera -->
+    <a-camera-static/>
+</a-scene>
 </body>
-</html>
-
