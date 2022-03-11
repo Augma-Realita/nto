@@ -12,15 +12,14 @@
 </head>
 
 <body>
-<a-scene
+<a-scene framet
         cursor="rayOrigin: mouse"
         raycaster="objects: [data-clickable]"
-        loading-screen="backgroundColor: #344A60"
 >
     <a-assets>
         <video
                 id="video1"
-                src="https://cdn.glitch.global/72d9ba18-b157-4642-8724-0dbe77d6c9d0/%20%D0%B2%D0%B8%D0%B4%D0%BE%D1%81.mp4?v=1646934367150"
+                src="https://cdn.glitch.me/72d9ba18-b157-4642-8724-0dbe77d6c9d0/%D0%B2%D0%B8%D0%B4%D1%8F%D0%BE.mp4?v=1646990174793"
                 preload="auto"
                 response-type="arraybuffer"
                 loop
@@ -37,19 +36,34 @@
         />
         <img
                 id="prev"
-                src="https://cdn.glitch.global/d41d488d-3288-4e87-8df1-22b117cb9dca/png-clipart-black-arrow-art-arrow-computer-icons-pointer-arrow-angle-rectangle.png?v=1646935289740"
+                src="https://cdn.glitch.global/72d9ba18-b157-4642-8724-0dbe77d6c9d0/%D1%81%D1%82%D1%80%D0%B5%D0%BB%D0%BE%D1%87%D0%BA%D0%B0%D0%BB%D0%B5%D0%B2%D0%BE.png?v=1646989621172"
         />
 
         <!-- Картинки оверлеи: фотографии из галереи -->
         <img
                 id="picture1"
-                src="https://cdn.glitch.global/e6eda915-1641-4e7f-a71c-e08238b5b19e/11.jpg?v=1642506242736"
+                src="https://cdn.glitch.global/72d9ba18-b157-4642-8724-0dbe77d6c9d0/%D0%B1%D0%B0%D0%B9%D0%BA%D0%B0%D0%BB.jpg?v=1646988142575"
         />
         <img
                 id="picture2"
-                src="https://cdn.glitch.global/e6eda915-1641-4e7f-a71c-e08238b5b19e/22.jpg?v=1642506243222"
+                src="https://cdn.glitch.global/72d9ba18-b157-4642-8724-0dbe77d6c9d0/%D0%B1%D0%B0%D0%B9%D0%BA%D0%B0%D0%BB1.jpg?v=1646988168479"
         />
-
+        <img
+                id="picture3"
+                src="https://cdn.glitch.global/72d9ba18-b157-4642-8724-0dbe77d6c9d0/%D0%B1%D0%B0%D0%B9%D0%BA%D0%B0%D0%BB2.jpg?v=1646988180261"
+        />
+        <img
+                id="picture4"
+                src="https://cdn.glitch.global/72d9ba18-b157-4642-8724-0dbe77d6c9d0/%D0%B1%D0%B0%D0%B9%D0%BA%D0%B0%D0%BB3.jpg?v=1646988196275"
+        />
+        <img
+                id="picture5"
+                src="https://cdn.glitch.global/72d9ba18-b157-4642-8724-0dbe77d6c9d0/%D0%B1%D0%B0%D0%B9%D0%BA%D0%B0%D0%BB4.jpg?v=1646988214041"
+        />
+        <img
+                id="picture6"
+                src="https://cdn.glitch.global/72d9ba18-b157-4642-8724-0dbe77d6c9d0/%D0%B1%D0%B0%D0%B9%D0%BA%D0%B0%D0%BB5.jpg?v=1646988235293"
+        />
 
 
 
@@ -60,29 +74,21 @@
 
 
     </a-assets>
-    <a-marker preset="hiro">
 
 
 
-    </a-marker>
 
-
-
-    <a-entity zappar-permissions-ui id="permissions"></a-entity>
-
-    <a-entity zappar-compatibility-ui id="compatibility"></a-entity>
-
-    <a-camera
-            zappar-camera
-            cursor="rayOrigin: mouse; fuse: false;"
-            raycaster="objects: .collidable"
-    ></a-camera>
+    <a-entity zappar-permissions-ui id="permissions">
+        <a-entity text="value: Please reload the page, accepting the camera permissions." position="0 0 -2">
+        </a-entity>
+    </a-entity>
+    <a-entity camera zappar-camera></a-entity>
 
     <a-entity zappar-image="target: #target ">
         <a-entity>
             <a-plane
                     id="pic0"
-                    visible="true"
+                    visible="false"
                     src="#picture1"
                     width="1.51"
                     height="1.5"
@@ -99,8 +105,45 @@
                     position="0 0 -0.01"
             >
             </a-plane>
-            <a-video
+            <a-plane
                     id="pic2"
+                    visible="false"
+                    src="#picture3"
+                    width="1.51"
+                    height="1.5"
+                    position="0 0 -0.01"
+            >
+            </a-plane>
+            <a-plane
+                    id="pic3"
+                    visible="false"
+                    src="#picture4"
+                    width="1.51"
+                    height="1.5"
+                    position="0 0 -0.01"
+            >
+            </a-plane>
+            <a-plane
+                    id="pic4"
+                    visible="false"
+                    src="#picture5"
+                    width="1.51"
+                    height="1.5"
+                    position="0 0 -0.01"
+            >
+            </a-plane>
+            <a-plane
+                    id="pic5"
+                    visible="false"
+                    src="#picture6"
+                    width="1.51"
+                    height="1.5"
+                    position="0 0 -0.01"
+            >
+            </a-plane>
+
+            <a-video
+                    id="pic6"
                     src="#video1"
                     visible="false"
                     scale="1 2 1"
@@ -134,15 +177,21 @@
 
 <script>
     var curr = 0;
-    var picAmount = 3;
+    var picAmount = 7;
     var d = document;
+
+    AFRAME.registerComponent("framet", {
+        init: function () {
+
+        },
+    });
 
     function OnNextClick() {
         if (curr < picAmount - 1) {
             curr++;
             d.getElementById("pic" + curr).setAttribute("visible", true);
             d.getElementById("pic" + (curr - 1)).setAttribute("visible", false);
-            if(curr == 2){
+            if(curr == 6){
                 d.getElementById("pic" + curr).setAttribute("visible", true);
                 d.getElementById("pic" + (curr - 1)).setAttribute("visible", false);
                 this.vid = document.querySelector("#video1");
@@ -150,11 +199,6 @@
             }
         }
     }
-
-
-
-
-
 
 
     function OnPrevClick() {
