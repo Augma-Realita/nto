@@ -67,7 +67,7 @@ def gallery():
 def navigation_lobby():
     if request.method == 'POST':
         return redirect(url_for('index'))
-    return render_template('navigationLobby.html')
+    return render_template('navigationLobbyMk2.html')
 
 
 @app.route('/navigation', methods=['GET', 'POST'])
