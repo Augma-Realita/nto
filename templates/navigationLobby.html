@@ -17,7 +17,7 @@ style="display: flex;
         border-width: 0px;
         position: absolute;
         left: 25%;
-        top: 10%;
+        top: 75%;
       "
 >
 <p
@@ -30,27 +30,7 @@ style="display: flex;
 >
     AR-Гид</p>
 </button>
-<button window.location.href='/create_route'
-        style="
-        width: 200px;
-        background-color: rgba(116.38, 195.08, 219.94, 1);
-        border-radius: 40px;
-        border-width: 0px;
-        position: absolute;
-        top: 20%;
-      "
->
-    <p
-            style="
-          font-size: 24px;
-          line-height: 100%;
-          text-align: center;
-          color: black;
-        "
-    >
-        Сгенерировать маршрут
-    </p>
-</button>
+
     <script src="/scripts/navigation.js"></script>
 <button onclick="window.location.href='/create_route'"
         style="
@@ -59,7 +39,7 @@ style="display: flex;
         border-radius: 40px;
         border-width: 0px;
         position: absolute;
-        top: 40%;
+        top: 70%;
       "
 >
     <p
@@ -80,7 +60,7 @@ style="display: flex;
         border-radius: 40px;
         border-width: 0px;
         position: absolute;
-        top: 80%;
+        top: 85%;
       "
 >
     <p
@@ -94,7 +74,25 @@ style="display: flex;
         Назад
     </p>
 </button>
-</div>
 
+    <table>
+        <tr>
+            <td>Экспонат</td>
+            <td>Посещения</td>
+            <td>Оценка</td>
+        </tr>
+        <tr class="data">
+        </tr>
+    </table>
+</div>
+<script>
+    $(document).ready(function(){
+        $.each(query.content,function(data){
+            html += "<td>"+this.no+"</td>";
+            html += "<td>"+this.nama+"</td>";
+            html += "<td>"+this.alamat+"</td>";
+        });
+    }
+</script>
 </body>
 </html>

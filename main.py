@@ -3,11 +3,19 @@ from flask import Flask, render_template, url_for, redirect, request, jsonify, s
 from scripts.routeBuilder import make_route
 from scripts.base_manager import get_arrow
 import os
+import string
+import random
+
+def id_generator(size=6, chars=string.ascii_uppercase + string.digits):
+    return ''.join(random.choice(chars) for _ in range(size))
 
 app = Flask(__name__)
-
+smth = id_generator()
 res = []
 nextTarget = 0
+
+
+
 
 @app.route('/')
 def index():
@@ -135,6 +143,7 @@ def admin_form():
     if request.method == 'POST':
         if request.form['username'] == '234' and request.form['password'] == '123':
             session['admin'] = request.form['username']
+            smth = id_generator()
             return redirect(url_for('admin'))
         else:
             error = 'Invalid Credentials. Please try again.'
@@ -142,7 +151,7 @@ def admin_form():
     return render_template('adminForm.html')
 
 
-@app.route('/admin', methods=['GET', 'POST'])
+@app.route('/' + smth, methods=['GET', 'POST'])
 def admin():
     if 'admin' not in session:
         return redirect(url_for('admin_form'))
@@ -177,6 +186,21 @@ def getTime():
     return jsonify(row)
 
 
+@app.route('/view_scores', methods=['GET', 'POST'])
+def getScores():
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    db_path = os.path.join(BASE_DIR, "scripts/db.sqlite")
+    conn = sqlite3.connect(db_path)
+    cur = conn.cursor()
+
+    cur.execute("select avg(visualFeedback), avg(description), avg(completeness), exibitId from Records group by exibitId")
+    row = cur.fetchall()
+    cur.close()
+    print(row)
+    return jsonify(row)
+
+
 if __name__ == '__main__':
-    app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+    app.secret_key = "over secret key"
     app.run(debug=True)
+
