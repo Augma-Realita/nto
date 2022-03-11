@@ -1,7 +1,9 @@
 import sqlite3
-from flask import Flask, render_template, url_for, redirect, request, jsonify
+from flask import Flask, render_template, url_for, redirect, request, jsonify, session
 from scripts.routeBuilder import make_route
 from scripts.base_manager import get_arrow
+import os
+
 app = Flask(__name__)
 
 res = []
@@ -126,30 +128,55 @@ def getCurrentArrow():
         return str(arrowDir)
 
 
+
 @app.route('/admin_form', methods=['GET', 'POST'])
-def toForm():
+def admin_form():
+    error = None
     if request.method == 'POST':
-        return redirect(url_for('index'))
+        if request.form['username'] == '234' and request.form['password'] == '123':
+            session['admin'] = request.form['username']
+            return redirect(url_for('admin'))
+        else:
+            error = 'Invalid Credentials. Please try again.'
+
     return render_template('adminForm.html')
 
 
 @app.route('/admin', methods=['GET', 'POST'])
-def toadmin():
-    if request.get_json(force=True)[0] == "234" and request.get_json(force=True)[1] == "123":
-        print("1")
-        return redirect('/admin1')
-    print("0")
-
-    return "0"
+def admin():
+    if 'admin' not in session:
+        return redirect(url_for('admin_form'))
+    else:
+        return render_template('admin.html')
 
 
-@app.route('/admin1', methods=['GET', 'POST'])
-def toFo3rm():
-    print("3")
-    if request.method == 'POST':
-        return redirect(url_for('index'))
-    return render_template('admin.html')
+@app.route('/visits_by_day', methods=['GET', 'POST'])
+def getByDay():
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    db_path = os.path.join(BASE_DIR, "scripts/db.sqlite")
+    conn = sqlite3.connect(db_path)
+    cur = conn.cursor()
+
+    cur.execute("select strftime('%Y-%m-%d', `time`), count() from Records group by strftime('%m %d', `time`)")
+    row = cur.fetchall()
+    cur.close()
+    print(row)
+    return jsonify(row)
+
+@app.route('/view_time', methods=['GET', 'POST'])
+def getTime():
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    db_path = os.path.join(BASE_DIR, "scripts/db.sqlite")
+    conn = sqlite3.connect(db_path)
+    cur = conn.cursor()
+
+    cur.execute("select avg(timeSpentInFrontSec), max(timeSpentInFrontSec), min(timeSpentInFrontSec), exibitId from Records group by exibitId")
+    row = cur.fetchall()
+    cur.close()
+    print(row)
+    return jsonify(row)
 
 
 if __name__ == '__main__':
-    app.run()
+    app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+    app.run(debug=True)
